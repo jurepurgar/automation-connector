@@ -39,5 +39,13 @@
       <PackageToBundle>false</PackageToBundle>
     </ManagementPackReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PurgarNET.AutomationConnector\PurgarNET.AutomationConnector.mpproj">
+      <Name>PurgarNET.AutomationConnector</Name>
+      <Project>{b967cf69-0ff3-481b-b572-56f380ca6f71}</Project>
+      <Private>True</Private>
+      <Alias>PA</Alias>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VSAC\Microsoft.SystemCenter.OperationsManager.targets" />
 </Project>
