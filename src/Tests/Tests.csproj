@@ -54,6 +54,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PurgarNET.AutomationConnector.Shared.Azure\PurgarNET.AutomationConnector.Shared.Azure.csproj">
+      <Project>{08912c59-b3c0-416b-9109-cb8b8454339e}</Project>
+      <Name>PurgarNET.AutomationConnector.Shared.Azure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PurgarNET.AutomationConnector.Shared.SMA\PurgarNET.AutomationConnector.Shared.SMA.csproj">
       <Project>{9b731d6e-df7c-44c4-97a9-cb3d75128521}</Project>
       <Name>PurgarNET.AutomationConnector.Shared.SMA</Name>
@@ -62,6 +66,9 @@
       <Project>{1A494025-0442-4F60-9F06-C89E8FB784E8}</Project>
       <Name>PurgarNET.AutomationConnector.Shared</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

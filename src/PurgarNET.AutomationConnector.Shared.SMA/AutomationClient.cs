@@ -18,17 +18,19 @@ namespace PurgarNET.AutomationConnector.Shared.SMA
             
         }
 
-        public void Initialize(Uri url, ICredentials credentials = null)
+        public void Initialize(Uri url, Func<ICredentials> getCredFunc)
         {
-            // consider moving to constructor
-            _ctx = new OrchestratorApi(url);
-            if (credentials == null)
-            {
-                credentials = CredentialCache.DefaultCredentials;
-            }
+            var creds = getCredFunc(); // check if is win integrated auth
 
+            Initialize(url, creds);
+        }
+
+        public void Initialize(Uri url, ICredentials credentials)
+        {
+            credentials = CredentialCache.DefaultCredentials;
             (_ctx as System.Data.Services.Client.DataServiceContext).Credentials = credentials;
         }
+
 
         public override Task<AutomationRunbook> GetRunbookAsync(string runbookName)
         {
