@@ -44,8 +44,13 @@
       <Name>PurgarNET.AutomationConnector</Name>
       <Project>{b967cf69-0ff3-481b-b572-56f380ca6f71}</Project>
       <Private>True</Private>
-      <Alias>PA</Alias>
+      <Alias>Base</Alias>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Settings.mpx">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VSAC\Microsoft.SystemCenter.OperationsManager.targets" />
 </Project>
