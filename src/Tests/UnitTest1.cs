@@ -31,11 +31,9 @@ namespace Tests
             var accountName = "TestAuto";
             var appId = "3ee8e1f7-561e-46c6-b5f8-cd74dd64dbc8";
 
-            var pass = "pass1";
-            
-            var securePass = ConvertToSecureString(pass);
+            var pass = "";
 
-            await cl.InitializeForWorkflowAsync(tenantId, subscriptionId, resourceGroup, accountName, appId, securePass);
+            await cl.InitializeForWorkflowAsync(tenantId, subscriptionId, resourceGroup, accountName, appId, pass);
 
             var r = await cl.GetRunbooksAsync();
         }

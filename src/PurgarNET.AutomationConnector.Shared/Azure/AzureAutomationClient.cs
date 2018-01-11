@@ -33,15 +33,19 @@ namespace PurgarNET.AutomationConnector.Shared.Azure
             */
         }
 
-        public async Task InitializeForWorkflowAsync(Guid tenantId, Guid subscriptionId, string resourceGroupName, string automationAccountName, string appId, SecureString password)
+        public async Task InitializeForWorkflowAsync(Guid tenantId, Guid subscriptionId, string resourceGroupName, string automationAccountName, string appId, string password)
         {
             AuthenticationContext _authCtx = new AuthenticationContext($"https://login.microsoftonline.com/{tenantId}/");
-            var token = await _authCtx.AcquireTokenSilentAsync("https://management.core.windows.net/", appId);
+
+            var token = await _authCtx.AcquireTokenAsync("https://management.core.windows.net/", new ClientCredential(appId, password));
+
+            //var token = await _authCtx.AcquireTokenSilentAsync("https://management.core.windows.net/", appId);
             var c = new TokenCloudCredentials(subscriptionId.ToString(), token.AccessToken);
+            InitializeInternal(c, resourceGroupName, automationAccountName);
             
         }
 
-        private void InitializeInternal(SubscriptionCloudCredentials cred, Guid subscriptionId, string resourceGroupName, string automationAccountName)
+        private void InitializeInternal(SubscriptionCloudCredentials cred, string resourceGroupName, string automationAccountName)
         {
             _client = new AutomationManagementClient(cred);
 
