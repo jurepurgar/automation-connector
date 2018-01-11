@@ -47,5 +47,10 @@
       <Alias>PA</Alias>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Settings.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VSAC\Microsoft.SystemCenter.OperationsManager.targets" />
 </Project>

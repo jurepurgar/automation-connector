@@ -3,18 +3,15 @@
     <EntityTypes>
       <ClassTypes>
         
-        <!-- In this section, modify the attributes based on your needs. Ensure the
-             Base attribute matches the application you are modeling.
-             More information can be found in the Management Pack Development Kit: 
-             http://msdn.microsoft.com/en-us/library/ee533867.aspx -->
-        <ClassType ID="PurgarNET.AutomationConnector.Azure.Settings" Base="Base!PurgarNET.AutomationConnector.SettingsBase" Accessibility="Public" Abstract="false" Hosted="false" Singleton="false">
-          
-          <!-- Inside this section, you can add and remove properties as needed.
-               More information can be found in the Management Pack Development Kit: 
-               http://msdn.microsoft.com/en-us/library/ee533714.aspx -->
-          <!--
-          <Property ID="Property1" Key="false" Type="string" />
-          -->
+        <ClassType ID="PurgarNET.AutomationConnector.Azure.Connector" Base="Base!PurgarNET.AutomationConnector.ConnectorBase" Accessibility="Public" Abstract="false" Hosted="false" Singleton="false">
+
+          <Property ID="TenantId" Type="guid" AutoIncrement="false" Key="false" Required="true" />
+          <Property ID="SubscriptionId" Type="guid" AutoIncrement="false" Key="false" Required="true" />
+          <Property ID="ResourceGroupName" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="true" />
+          <Property ID="AutomationAccountName" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="true" />
+          <Property ID="AppId" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="true" />
+          <Property ID="DefaultRunOn" Key="false" Type="string" MinLength="0" MaxLength="1024" DefaultValue="Azure" />
+
         </ClassType>
       
       </ClassTypes>
@@ -24,10 +21,8 @@
     <LanguagePack ID="ENU" IsDefault="true">
       <DisplayStrings>
         
-        <!-- This is the string users of the Operations Console and Web Console will see. 
-             Descriptions are also helpful when the user is doing a search in the Console. -->
-        <DisplayString ElementID="PurgarNET.AutomationConnector.Azure.Settings">
-          <Name>Settings Class</Name>
+        <DisplayString ElementID="PurgarNET.AutomationConnector.Azure.Connector">
+          <Name>Azure Automation Connector</Name>
           <Description></Description>
         </DisplayString>
 

@@ -3,10 +3,10 @@
     <EntityTypes>
       <ClassTypes>
 
-        <ClassType ID="PurgarNET.AutomationConnector.SettingsBase" Accessibility="Public" Abstract="true" Base="LinkingFramework.Library!System.LinkingFramework.DataSource" Hosted="false" Singleton="false" Extension="false">
-          <Property ID="DataFilePath" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" />
-          <Property ID="MappingFilePath" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" />
-          <Property ID="NumberMinutes" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" />
+        <ClassType ID="PurgarNET.AutomationConnector.ConnectorBase" Accessibility="Public" Abstract="true" Base="System!System.Entity" Hosted="false" Singleton="false" Extension="false">
+          <Property ID="ConnectorID" Type="guid" Key="true" Required="true" />
+          <Property ID="Name" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="true" />
+
         </ClassType>
         
       </ClassTypes>
@@ -16,20 +16,18 @@
     <LanguagePack ID="ENU" IsDefault="true">
       <DisplayStrings>
         
-        <!-- This is the string users of the Operations Console and Web Console will see. 
-             Descriptions are also helpful when the user is doing a search in the Console. -->
-        <DisplayString ElementID="PurgarNET.AutomationConnector.Settings">
-          <Name>PurgarNET Class</Name>
-          <Description></Description>
+        <DisplayString ElementID="PurgarNET.AutomationConnector.ConnectorBase">
+          <Name>Automation Settings Base</Name>
         </DisplayString>
 
-        <!-- Uncomment the below section if you need to add a user friendly string for each property. -->
-        <!--
-        <DisplayString ElementID="PurgarNET.AutomationConnector.PurgarNET" SubElementID="Property1">
-          <Name>Property1 Property</Name>
-          <Description></Description>
+        <DisplayString ElementID="PurgarNET.AutomationConnector.ConnectorBase" SubElementID="ConnectorID">
+          <Name>ConnectorID</Name>
         </DisplayString>
-        -->
+
+        <DisplayString ElementID="PurgarNET.AutomationConnector.ConnectorBase" SubElementID="Name">
+          <Name>Connector Name</Name>
+        </DisplayString>
+
       </DisplayStrings>
     </LanguagePack>
   </LanguagePacks>

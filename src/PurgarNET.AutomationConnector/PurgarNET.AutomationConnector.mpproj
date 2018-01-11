@@ -14,11 +14,11 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\Debug\</OutputPath>
-    <GenerateSealed>false</GenerateSealed>
-    <Company>MyCompany</Company>
-    <Copyright>Copyright (c) MyCompany. All rights reserved.</Copyright>
-    <DelaySigning>false</DelaySigning>
-    <AssemblyOriginatorKeyFile />
+    <GenerateSealed>True</GenerateSealed>
+    <Company>PurgarNET</Company>
+    <Copyright>Copyright (c) PurgarNET. All rights reserved.</Copyright>
+    <DelaySigning>False</DelaySigning>
+    <AssemblyOriginatorKeyFile>C:\Users\jure.purgar\kolektor.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DebugSymbols>false</DebugSymbols>
@@ -30,9 +30,21 @@
     <AssemblyOriginatorKeyFile />
   </PropertyGroup>
   <ItemGroup>
+    <ManagementPackReference Include="Microsoft.EnterpriseManagement.ServiceManager.UI.Administration">
+      <HintPath>C:\Users\jure.purgar\source\repos\automation-connector\ref\mp\Administration.mpb</HintPath>
+      <Alias>Administration</Alias>
+      <MinVersion>7.5.7487.0</MinVersion>
+      <PackageToBundle>False</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="Microsoft.EnterpriseManagement.ServiceManager.UI.Console">
+      <HintPath>C:\Users\jure.purgar\source\repos\automation-connector\ref\mp\Console.mpb</HintPath>
+      <Alias>SMConsole</Alias>
+      <MinVersion>7.5.7487.0</MinVersion>
+      <PackageToBundle>False</PackageToBundle>
+    </ManagementPackReference>
     <ManagementPackReference Include="Microsoft.SystemCenter.Library">
       <Alias>SC</Alias>
-      <PackageToBundle>false</PackageToBundle>
+      <PackageToBundle>False</PackageToBundle>
     </ManagementPackReference>
     <ManagementPackReference Include="System.Library">
       <Alias>System</Alias>
@@ -41,6 +53,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="SettingsBase.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views.mpx">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
