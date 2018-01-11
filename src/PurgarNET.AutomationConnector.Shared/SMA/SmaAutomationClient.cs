@@ -4,33 +4,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PurgarNET.AutomationConnector.Shared.Models;
-using PurgarNET.AutomationConnector.Shared.SMA.SMAServiceReference;
 using System.Net;
+using Orchestrator.ResourceModel;
 
 namespace PurgarNET.AutomationConnector.Shared.SMA
 {
-    public class AutomationClient : AutomationClientBase
+    public class SmaAutomationClient : AutomationClientBase
     {
         private static OrchestratorApi _ctx = null;
-
-        public AutomationClient()
-        {
-            
-        }
 
         public void Initialize(Uri url, Func<ICredentials> getCredFunc)
         {
             var creds = getCredFunc(); // check if is win integrated auth
+            if (creds == null)
+            {
+                creds = CredentialCache.DefaultCredentials;
+            }
 
             Initialize(url, creds);
         }
 
         public void Initialize(Uri url, ICredentials credentials)
         {
-            credentials = CredentialCache.DefaultCredentials;
+            _ctx = new OrchestratorApi(url);
             (_ctx as System.Data.Services.Client.DataServiceContext).Credentials = credentials;
         }
-
 
         public override Task<AutomationRunbook> GetRunbookAsync(string runbookName)
         {

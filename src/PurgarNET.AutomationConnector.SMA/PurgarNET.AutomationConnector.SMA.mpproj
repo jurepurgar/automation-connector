@@ -48,7 +48,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Settings.mpx">
+    <Compile Include="SmaConnector.mpx">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

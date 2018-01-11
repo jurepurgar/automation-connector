@@ -52,12 +52,25 @@
     </ManagementPackReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SettingsBase.mpx">
+    <Compile Include="AzureConnector.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ConnectorBase.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SmaConnector.mpx">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Views.mpx">
       <SubType>Code</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PurgarNET.AutomationConnector.Console\PurgarNET.AutomationConnector.Console.csproj">
+      <Name>PurgarNET.AutomationConnector.Console</Name>
+      <Project>{fe25a302-7239-4459-9ebc-b20a8c9b343b}</Project>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VSAC\Microsoft.SystemCenter.OperationsManager.targets" />
 </Project>

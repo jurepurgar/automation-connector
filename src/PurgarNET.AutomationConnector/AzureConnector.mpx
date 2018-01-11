@@ -1,0 +1,39 @@
+﻿<ManagementPackFragment SchemaVersion="SM2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+        
+        <ClassType ID="PurgarNET.AutomationConnector.AzureConnector" Base="PurgarNET.AutomationConnector.ConnectorBase" Accessibility="Public" Abstract="false" Hosted="false" Singleton="false">
+
+          <Property ID="TenantId" Type="guid" AutoIncrement="false" Key="false" Required="true" />
+          <Property ID="SubscriptionId" Type="guid" AutoIncrement="false" Key="false" Required="true" />
+          <Property ID="ResourceGroupName" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="true" />
+          <Property ID="AutomationAccountName" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="true" />
+          <Property ID="AppId" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="true" />
+          <Property ID="DefaultRunOn" Key="false" Type="string" MinLength="0" MaxLength="1024" DefaultValue="Azure" />
+
+        </ClassType>
+      
+      </ClassTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        
+        <DisplayString ElementID="PurgarNET.AutomationConnector.AzureConnector">
+          <Name>Azure Automation Connector</Name>
+          <Description></Description>
+        </DisplayString>
+
+        <!-- Uncomment the below section if you need to add a user friendly string for each property. -->
+        <!--
+        <DisplayString ElementID="PurgarNET.AutomationConnector.Azure.Settings" SubElementID="Property1">
+          <Name>Property1 Property</Name>
+          <Description></Description>
+        </DisplayString>
+        -->
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

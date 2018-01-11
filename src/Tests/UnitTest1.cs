@@ -12,7 +12,7 @@ namespace Tests
         [TestMethod]
         public async Task TestMethod1()
         {
-            var cl = new PurgarNET.AutomationConnector.Shared.SMA.AutomationClient();
+            var cl = new PurgarNET.AutomationConnector.Shared.SMA.SmaAutomationClient();
 
             cl.Initialize(new Uri("https://sma.kolektor.com/00000000-0000-0000-0000-000000000000/"), () => null);
 
@@ -23,7 +23,7 @@ namespace Tests
         [TestMethod]
         public async Task TestMethod2()
         {
-            var cl = new PurgarNET.AutomationConnector.Shared.Azure.AutomationClient();
+            var cl = new PurgarNET.AutomationConnector.Shared.Azure.AzureAutomationClient();
 
             var tenantId = new Guid("a600e706-e740-4516-ba18-e37812af394e");
             var subscriptionId = new Guid("5410c318-3fb7-46bd-b422-c6931e0c089c");
@@ -35,7 +35,7 @@ namespace Tests
             
             var securePass = ConvertToSecureString(pass);
 
-            cl.Initialize(tenantId, subscriptionId, resourceGroup, accountName, appId, securePass);
+            await cl.InitializeForWorkflowAsync(tenantId, subscriptionId, resourceGroup, accountName, appId, securePass);
 
             var r = await cl.GetRunbooksAsync();
         }

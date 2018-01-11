@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Tests</RootNamespace>
     <AssemblyName>Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -16,6 +16,7 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,21 +55,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PurgarNET.AutomationConnector.Shared.Azure\PurgarNET.AutomationConnector.Shared.Azure.csproj">
-      <Project>{08912c59-b3c0-416b-9109-cb8b8454339e}</Project>
-      <Name>PurgarNET.AutomationConnector.Shared.Azure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PurgarNET.AutomationConnector.Shared.SMA\PurgarNET.AutomationConnector.Shared.SMA.csproj">
-      <Project>{9b731d6e-df7c-44c4-97a9-cb3d75128521}</Project>
-      <Name>PurgarNET.AutomationConnector.Shared.SMA</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PurgarNET.AutomationConnector.Shared\PurgarNET.AutomationConnector.Shared.csproj">
-      <Project>{1A494025-0442-4F60-9F06-C89E8FB784E8}</Project>
-      <Name>PurgarNET.AutomationConnector.Shared</Name>
-    </ProjectReference>
+    <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <ProjectReference Include="..\PurgarNET.AutomationConnector.Shared\PurgarNET.AutomationConnector.Shared.csproj">
+      <Project>{1a494025-0442-4f60-9f06-c89e8fb784e8}</Project>
+      <Name>PurgarNET.AutomationConnector.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
