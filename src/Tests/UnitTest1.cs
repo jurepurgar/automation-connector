@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PurgarNET.AutomationConnector.Shared;
 using System.Threading.Tasks;
 using System.Security;
+using PurgarNET.AutomationConnector.Shared.Azure;
 
 namespace Tests
 {
@@ -23,19 +24,40 @@ namespace Tests
         [TestMethod]
         public async Task TestMethod2()
         {
-            var cl = new PurgarNET.AutomationConnector.Shared.Azure.AzureAutomationClient();
-
             var tenantId = new Guid("a600e706-e740-4516-ba18-e37812af394e");
             var subscriptionId = new Guid("5410c318-3fb7-46bd-b422-c6931e0c089c");
             var resourceGroup = "AutomationGroup";
             var accountName = "TestAuto";
-            var appId = "3ee8e1f7-561e-46c6-b5f8-cd74dd64dbc8";
+            var appId = new Guid("3ee8e1f7-561e-46c6-b5f8-cd74dd64dbc8");
 
             var pass = "";
 
-            await cl.InitializeForWorkflowAsync(tenantId, subscriptionId, resourceGroup, accountName, appId, pass);
+
+            var cl = AzureAutomationClient.GetForWorkflow(tenantId, subscriptionId, resourceGroup, accountName, appId, pass);
 
             var r = await cl.GetRunbooksAsync();
+
+            r = await cl.GetRunbooksAsync();
+
+            r = await cl.GetRunbooksAsync();
+        }
+
+        [TestMethod]
+        public async Task TestMethod3()
+        {
+            var tenantId = new Guid("a600e706-e740-4516-ba18-e37812af394e");
+            var subscriptionId = new Guid("5410c318-3fb7-46bd-b422-c6931e0c089c");
+            var resourceGroup = "AutomationGroup";
+            var accountName = "TestAuto";
+            var appId = new Guid("3ee8e1f7-561e-46c6-b5f8-cd74dd64dbc8");
+
+            var cl = AzureAutomationClient.GetForUser(tenantId, subscriptionId, resourceGroup, accountName, appId);
+
+            var r = await cl.GetRunbooksAsync();
+
+            r = await cl.GetRunbooksAsync();
+
+            r = await cl.GetRunbooksAsync();
         }
 
         private static SecureString ConvertToSecureString(string password)

@@ -7,8 +7,35 @@ using PurgarNET.AutomationConnector.Shared.Models;
 
 namespace PurgarNET.AutomationConnector.Shared
 {
+    public enum ClientType { Workflow, User}
+
     public abstract class AutomationClientBase
     {
+        private static Dictionary<string, AutomationClientBase> _clientsCache = new Dictionary<string, AutomationClientBase>();
+
+        private static object _syncLock = new object();
+
+        protected static T GetClient<T>(string cacheKey, ClientType type, Func<T> createClientFunc) where T : AutomationClientBase
+        {
+            lock (_syncLock)
+            {
+                cacheKey = cacheKey + "-" + type;
+                if (_clientsCache.ContainsKey(cacheKey))
+                {
+                    return (T)_clientsCache[cacheKey];
+                }
+                else
+                {
+                    var c = createClientFunc.Invoke();
+                    c.ClientType = type;
+                    _clientsCache.Add(cacheKey, c);
+                    return c;
+                }
+            }
+        }
+
+        protected ClientType ClientType;
+
         public abstract Task<IEnumerable<AutomationRunbook>> GetRunbooksAsync();
 
         public abstract Task<AutomationRunbook> GetRunbookAsync(string runbookName);

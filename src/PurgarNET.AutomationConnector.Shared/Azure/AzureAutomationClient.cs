@@ -13,45 +13,73 @@ namespace PurgarNET.AutomationConnector.Shared.Azure
 {
     public class AzureAutomationClient : AutomationClientBase
     {
-        AutomationManagementClient _client = null;
-        string _resourceGroupName = null;
-        string _automationAccountName = null;
-        
-        public AzureAutomationClient()
+        private AutomationManagementClient _client = null;
+        private string _resourceGroupName = null;
+        private string _automationAccountName = null;
+        private Guid _subscriptionId;
+        private Guid _appId;
+        private ClientCredential _clientCred = null;
+        private AuthenticationContext _authCtx = null;
+        private AuthenticationResult _authResult = null;
+        private string _token = null;
+
+        protected AzureAutomationClient(Guid tenantId, Guid subscriptionId, string resourceGroupName, string automationAccountName, Guid appId)
         {
-            
-        }
-
-        public void Initialize(Guid tenantId, Guid subscriptionId, string resourceGroupName, string automationAccountName, string appId, SecureString password)
-        {
-            /*var _account = new AzureAccount()
-            {
-                Id = appId,
-                Type = AzureAccount.AccountType.ServicePrincipal
-            };
-            var c = AzureSession.AuthenticationFactory.Authenticate(_account, _environment, tenantId.ToString(), password, ShowDialog.Never);
-            */
-        }
-
-        public async Task InitializeForWorkflowAsync(Guid tenantId, Guid subscriptionId, string resourceGroupName, string automationAccountName, string appId, string password)
-        {
-            AuthenticationContext _authCtx = new AuthenticationContext($"https://login.microsoftonline.com/{tenantId}/");
-
-            var token = await _authCtx.AcquireTokenAsync("https://management.core.windows.net/", new ClientCredential(appId, password));
-
-            //var token = await _authCtx.AcquireTokenSilentAsync("https://management.core.windows.net/", appId);
-            var c = new TokenCloudCredentials(subscriptionId.ToString(), token.AccessToken);
-            InitializeInternal(c, resourceGroupName, automationAccountName);
-            
-        }
-
-        private void InitializeInternal(SubscriptionCloudCredentials cred, string resourceGroupName, string automationAccountName)
-        {
-            _client = new AutomationManagementClient(cred);
-
+            _authCtx = new AuthenticationContext(Parameters.AZURE_LOGIN_AUTHORITY + tenantId);
+            _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _automationAccountName = automationAccountName;
+            _appId = appId;
+            _client = new AutomationManagementClient();
         }
+
+        private static AzureAutomationClient GetClient(ClientType type, Guid tenantId, Guid subscriptionId, string resourceGroupName, string automationAccountName, Guid appId, string password)
+        {
+            return GetClient($"{subscriptionId}-{resourceGroupName}-{automationAccountName}-{appId}", type, () => new AzureAutomationClient(tenantId, subscriptionId, resourceGroupName, automationAccountName, appId));
+        }
+
+        public static AzureAutomationClient GetForWorkflow(Guid tenantId, Guid subscriptionId, string resourceGroupName, string automationAccountName, Guid appId, string password)
+        {
+            var c = GetClient(ClientType.Workflow, tenantId, subscriptionId, resourceGroupName, automationAccountName, appId, password);
+            c._clientCred = new ClientCredential(appId.ToString(), password);
+            return c;
+        }
+
+        public static AzureAutomationClient GetForUser(Guid tenantId, Guid subscriptionId, string resourceGroupName, string automationAccountName, Guid appId)
+        {
+            return GetClient(ClientType.User, tenantId, subscriptionId, resourceGroupName, automationAccountName, appId, null);
+        }
+
+        private async Task AssureLogin()
+        {
+            var token = await ((ClientType == ClientType.Workflow) ? GetAppToken() : GetUserToken());
+
+            if (token != _token)
+            {
+                _token = token;
+                _client = new AutomationManagementClient(new TokenCloudCredentials(_subscriptionId.ToString(), _token));
+            }
+
+        }
+
+        private async Task<string> GetAppToken()
+        {
+            var t = await _authCtx.AcquireTokenAsync(Parameters.AZURE_LOGIN_RESOURCE, _clientCred);
+            return t.AccessToken;
+        }
+
+        private async Task<string> GetUserToken()
+        {
+            try
+            {
+                return (await _authCtx.AcquireTokenSilentAsync(Parameters.AZURE_LOGIN_RESOURCE, Parameters.AZURE_API_APPID)).AccessToken;
+            }
+            catch (Exception e)
+            {
+                return (await _authCtx.AcquireTokenAsync(Parameters.AZURE_LOGIN_RESOURCE, Parameters.AZURE_API_APPID, Parameters.REDIRECT_URI, new PlatformParameters(PromptBehavior.SelectAccount))).AccessToken;
+            }
+        }
+        
 
         public override Task<AutomationJob> GetJobAsync(Guid jobId)
         {
@@ -70,6 +98,7 @@ namespace PurgarNET.AutomationConnector.Shared.Azure
 
         public override async Task<IEnumerable<AutomationRunbook>> GetRunbooksAsync()
         {
+            await AssureLogin();
             var rbs = await _client.Runbooks.ListAsync(_resourceGroupName, _automationAccountName);
 
             var rb = rbs;
