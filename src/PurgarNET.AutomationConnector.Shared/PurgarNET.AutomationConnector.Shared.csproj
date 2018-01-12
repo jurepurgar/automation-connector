@@ -102,6 +102,7 @@
     <Compile Include="AutomationClientBase.cs" />
     <Compile Include="Azure\AzureAutomationClient.cs" />
     <Compile Include="Connected Services\SmaService\SmaReference.cs" />
+    <Compile Include="CredentialPicker.cs" />
     <Compile Include="Models\AutomationJob.cs" />
     <Compile Include="Models\AutomationRunbook.cs" />
     <Compile Include="Parameters.cs" />

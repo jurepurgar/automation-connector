@@ -6,28 +6,37 @@ using System.Threading.Tasks;
 using PurgarNET.AutomationConnector.Shared.Models;
 using System.Net;
 using Orchestrator.ResourceModel;
+using System.Data.Services.Client;
 
 namespace PurgarNET.AutomationConnector.Shared.SMA
 {
-    public class SmaAutomationClient : AutomationClientBase
+    public class SmaClient : AutomationClientBase
     {
-        private static OrchestratorApi _ctx = null;
+        private OrchestratorApi _ctx = null;
 
-        public void Initialize(Uri url, Func<ICredentials> getCredFunc)
+        public SmaClient(OrchestratorApi ctx)
         {
-            var creds = getCredFunc(); // check if is win integrated auth
-            if (creds == null)
-            {
-                creds = CredentialCache.DefaultCredentials;
-            }
-
-            Initialize(url, creds);
+            _ctx = ctx;
         }
 
-        public void Initialize(Uri url, ICredentials credentials)
+        public static SmaClient GetForWorkflow(Uri url, string username, string password)
         {
-            _ctx = new OrchestratorApi(url);
-            (_ctx as System.Data.Services.Client.DataServiceContext).Credentials = credentials;
+            return GetClient(url.ToString(), ClientType.Workflow, () =>
+            {
+                var ctx = new OrchestratorApi(url);
+                (ctx as DataServiceContext).Credentials = new NetworkCredential(username, password);
+                return new SmaClient(ctx);
+            });
+        }
+
+        public static SmaClient GetForUser(Uri url)
+        {
+            return GetClient(url.ToString(), ClientType.Workflow, () =>
+            {
+                var ctx = new OrchestratorApi(url);
+                (ctx as DataServiceContext).Credentials = CredentialCache.DefaultNetworkCredentials;
+                return new SmaClient(ctx);
+            });
         }
 
         public override Task<AutomationRunbook> GetRunbookAsync(string runbookName)
@@ -39,13 +48,9 @@ namespace PurgarNET.AutomationConnector.Shared.SMA
             });
         }
 
-        public override Task<IEnumerable<AutomationRunbook>> GetRunbooksAsync()
+        public override async Task<IEnumerable<AutomationRunbook>> GetRunbooksAsync()
         {
-            return Task<IEnumerable<AutomationRunbook>>.Factory.StartNew(() =>
-            {
-                var runbooks = _ctx.Runbooks.Expand(x => x.PublishedRunbookVersion).ToList().Select(x => ToAutomationRunbook(x)).ToList();
-                return runbooks;
-            });
+            return await ExecuteCommand(() => _ctx.Runbooks.Expand(x => x.PublishedRunbookVersion).ToList().Select(x => ToAutomationRunbook(x)).ToList());
         }
 
         public override Task<AutomationJob> GetJobAsync(Guid jobId)
@@ -56,6 +61,41 @@ namespace PurgarNET.AutomationConnector.Shared.SMA
         public override Task<IEnumerable<AutomationJob>> GetJobsAsync()
         {
             throw new NotImplementedException();
+        }
+
+        private async Task<T> ExecuteCommand<T>(Func<T> command)
+        {
+            var retry = false;
+            var count = 0;
+            T result = default(T);
+
+            do
+            {
+                count++;
+                try
+                {
+                    result = await Task<T>.Factory.StartNew(() => command.Invoke());
+                }
+                catch (Exception e)
+                {
+                    if (ClientType == ClientType.User && e.InnerException != null && e.InnerException is DataServiceClientException ie && (ie.StatusCode == 401 || ie.StatusCode == 403) && count < 5)
+                    {
+                        retry = true;
+                        var c = CredentialPicker.PromptForCredential("test", "test");
+                        if (c != null)
+                        {
+                            (_ctx as DataServiceContext).Credentials = c;
+                        }
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+            while (retry);
+
+            return result;
         }
 
         private AutomationRunbook ToAutomationRunbook(Runbook runbook)

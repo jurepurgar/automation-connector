@@ -17,37 +17,34 @@ namespace PurgarNET.AutomationConnector.Shared.Azure
         private string _resourceGroupName = null;
         private string _automationAccountName = null;
         private Guid _subscriptionId;
-        private Guid _appId;
         private ClientCredential _clientCred = null;
         private AuthenticationContext _authCtx = null;
-        private AuthenticationResult _authResult = null;
         private string _token = null;
 
-        protected AzureAutomationClient(Guid tenantId, Guid subscriptionId, string resourceGroupName, string automationAccountName, Guid appId)
+        protected AzureAutomationClient(Guid tenantId, Guid subscriptionId, string resourceGroupName, string automationAccountName)
         {
             _authCtx = new AuthenticationContext(Parameters.AZURE_LOGIN_AUTHORITY + tenantId);
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _automationAccountName = automationAccountName;
-            _appId = appId;
             _client = new AutomationManagementClient();
         }
 
-        private static AzureAutomationClient GetClient(ClientType type, Guid tenantId, Guid subscriptionId, string resourceGroupName, string automationAccountName, Guid appId, string password)
+        private static AzureAutomationClient GetClient(ClientType type, Guid tenantId, Guid subscriptionId, string resourceGroupName, string automationAccountName)
         {
-            return GetClient($"{subscriptionId}-{resourceGroupName}-{automationAccountName}-{appId}", type, () => new AzureAutomationClient(tenantId, subscriptionId, resourceGroupName, automationAccountName, appId));
+            return GetClient($"{subscriptionId}-{resourceGroupName}-{automationAccountName}", type, () => new AzureAutomationClient(tenantId, subscriptionId, resourceGroupName, automationAccountName));
         }
 
         public static AzureAutomationClient GetForWorkflow(Guid tenantId, Guid subscriptionId, string resourceGroupName, string automationAccountName, Guid appId, string password)
         {
-            var c = GetClient(ClientType.Workflow, tenantId, subscriptionId, resourceGroupName, automationAccountName, appId, password);
+            var c = GetClient(ClientType.Workflow, tenantId, subscriptionId, resourceGroupName, automationAccountName);
             c._clientCred = new ClientCredential(appId.ToString(), password);
             return c;
         }
 
-        public static AzureAutomationClient GetForUser(Guid tenantId, Guid subscriptionId, string resourceGroupName, string automationAccountName, Guid appId)
+        public static AzureAutomationClient GetForUser(Guid tenantId, Guid subscriptionId, string resourceGroupName, string automationAccountName)
         {
-            return GetClient(ClientType.User, tenantId, subscriptionId, resourceGroupName, automationAccountName, appId, null);
+            return GetClient(ClientType.User, tenantId, subscriptionId, resourceGroupName, automationAccountName);
         }
 
         private async Task AssureLogin()
@@ -74,7 +71,7 @@ namespace PurgarNET.AutomationConnector.Shared.Azure
             {
                 return (await _authCtx.AcquireTokenSilentAsync(Parameters.AZURE_LOGIN_RESOURCE, Parameters.AZURE_API_APPID)).AccessToken;
             }
-            catch (Exception e)
+            catch
             {
                 return (await _authCtx.AcquireTokenAsync(Parameters.AZURE_LOGIN_RESOURCE, Parameters.AZURE_API_APPID, Parameters.REDIRECT_URI, new PlatformParameters(PromptBehavior.SelectAccount))).AccessToken;
             }
