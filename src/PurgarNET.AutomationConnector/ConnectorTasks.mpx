@@ -7,13 +7,23 @@
   <Presentation>
     <ConsoleTasks>
       
-      <ConsoleTask ID="PurgarNET.AutomationConnector.ManageConnector.Create" Accessibility="Public" Enabled="true" Target="PurgarNET.AutomationConnector.ConnectorsView" RequireOutput="false">
+      <ConsoleTask ID="PurgarNET.AutomationConnector.ManageConnector.CreateAzure" Accessibility="Public" Enabled="true" Target="PurgarNET.AutomationConnector.ConnectorsView" RequireOutput="false">
         <Assembly>Console!SdkDataAccessAssembly</Assembly>
         <Handler>Microsoft.EnterpriseManagement.UI.SdkDataAccess.ConsoleTaskHandler</Handler>
         <Parameters>
           <Argument Name="Assembly">PurgarNET.AutomationConnector.Console</Argument>
           <Argument Name="Type">PurgarNET.AutomationConnector.Console.ManageConnectorTask</Argument>
-          <Argument Name="Action">create</Argument>
+          <Argument Name="Action">createazure</Argument>
+        </Parameters>
+      </ConsoleTask>
+      
+      <ConsoleTask ID="PurgarNET.AutomationConnector.ManageConnector.CreateSma" Accessibility="Public" Enabled="true" Target="PurgarNET.AutomationConnector.ConnectorsView" RequireOutput="false">
+        <Assembly>Console!SdkDataAccessAssembly</Assembly>
+        <Handler>Microsoft.EnterpriseManagement.UI.SdkDataAccess.ConsoleTaskHandler</Handler>
+        <Parameters>
+          <Argument Name="Assembly">PurgarNET.AutomationConnector.Console</Argument>
+          <Argument Name="Type">PurgarNET.AutomationConnector.Console.ManageConnectorTask</Argument>
+          <Argument Name="Action">createsma</Argument>
         </Parameters>
       </ConsoleTask>
 
@@ -44,8 +54,12 @@
   <LanguagePacks>
     <LanguagePack ID="ENU" IsDefault="true">
       <DisplayStrings>
-        <DisplayString ElementID="PurgarNET.AutomationConnector.ManageConnector.Create">
-          <Name>Create Connector</Name>
+        <DisplayString ElementID="PurgarNET.AutomationConnector.ManageConnector.CreateAzure">
+          <Name>Create Azure Automation Connector</Name>
+          <Description></Description>
+        </DisplayString>
+        <DisplayString ElementID="PurgarNET.AutomationConnector.ManageConnector.CreateSma">
+          <Name>Create Service Management Automation Connector</Name>
           <Description></Description>
         </DisplayString>
         <DisplayString ElementID="PurgarNET.AutomationConnector.ManageConnector.Edit">
