@@ -36,9 +36,15 @@
       <MinVersion>7.5.7487.0</MinVersion>
       <PackageToBundle>False</PackageToBundle>
     </ManagementPackReference>
+    <ManagementPackReference Include="Microsoft.EnterpriseManagement.ServiceManager.UI.Authoring">
+      <HintPath>C:\Users\jure.purgar\source\repos\automation-connector\ref\mp\Authoring.mpb</HintPath>
+      <Alias>Authoring</Alias>
+      <MinVersion>7.5.7487.0</MinVersion>
+      <PackageToBundle>False</PackageToBundle>
+    </ManagementPackReference>
     <ManagementPackReference Include="Microsoft.EnterpriseManagement.ServiceManager.UI.Console">
       <HintPath>C:\Users\jure.purgar\source\repos\automation-connector\ref\mp\Console.mpb</HintPath>
-      <Alias>SMConsole</Alias>
+      <Alias>Console</Alias>
       <MinVersion>7.5.7487.0</MinVersion>
       <PackageToBundle>False</PackageToBundle>
     </ManagementPackReference>
@@ -56,6 +62,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ConnectorBase.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ConsoleTasks.mpx">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="SmaConnector.mpx">

@@ -1,7 +1,7 @@
 ﻿<ManagementPackFragment SchemaVersion="SM2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Presentation>
     <Views>
-      <View ID="PurgarNET.AutomationConnector.ConnectorsView" Accessibility="Public" Enabled="true" Target="PurgarNET.AutomationConnector.ConnectorBase" TypeID="SMConsole!GridViewType" Visible="true">
+      <View ID="PurgarNET.AutomationConnector.ConnectorsView" Accessibility="Public" Enabled="true" Target="PurgarNET.AutomationConnector.ConnectorBase" TypeID="Console!GridViewType" Visible="true">
         <Category>NotUsed</Category>
         <Data>
           <Adapters>
