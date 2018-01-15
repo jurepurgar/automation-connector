@@ -1,0 +1,13 @@
+﻿<ManagementPackFragment SchemaVersion="SM2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Resources>
+    <DeployableAssembly ID="PurgarNET.AutomationConnector.Shared" Accessibility="Public" FileName="PurgarNET.AutomationConnector.Shared.dll" HasNullStream="false" QualifiedName="PurgarNET.AutomationConnector.Shared, Version=1.0.0.0" />
+    <DeployableAssembly ID="PurgarNET.AutomationConnector.Console" Accessibility="Public" FileName="PurgarNET.AutomationConnector.Console.dll" HasNullStream="false" QualifiedName="PurgarNET.AutomationConnector.Console, Version=1.0.0.0" />
+
+    <!--
+    <DeployableAssembly ID="RestSharp" Accessibility="Public" FileName="RestSharp.dll" HasNullStream="false" QualifiedName="RestSharp, Version=105.2.3.0" />
+    <DeployableAssembly ID="AsyncBridge.Net35" Accessibility="Public" FileName="AsyncBridge.Net35.dll" HasNullStream="false" QualifiedName="AsyncBridge.Net35, Version=0.0.0.0" />
+    <DeployableAssembly ID="System.Threading" Accessibility="Public" FileName="System.Threading.dll" HasNullStream="false" QualifiedName="System.Threading, Version=1.0.2856.102" />
+-->
+
+  </Resources>
+</ManagementPackFragment>

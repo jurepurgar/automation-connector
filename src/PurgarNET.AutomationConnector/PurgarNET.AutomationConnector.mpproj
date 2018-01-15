@@ -58,13 +58,19 @@
     </ManagementPackReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assemblies.mpx">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="AzureConnector.mpx">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ConnectorBase.mpx">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ConsoleTasks.mpx">
+    <Compile Include="ConnectorTasks.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ManagementPack.mpx">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="SmaConnector.mpx">
@@ -79,6 +85,13 @@
       <Name>PurgarNET.AutomationConnector.Console</Name>
       <Project>{fe25a302-7239-4459-9ebc-b20a8c9b343b}</Project>
       <Private>True</Private>
+      <PackageToBundle>True</PackageToBundle>
+    </ProjectReference>
+    <ProjectReference Include="..\PurgarNET.AutomationConnector.Shared\PurgarNET.AutomationConnector.Shared.csproj">
+      <Name>PurgarNET.AutomationConnector.Shared</Name>
+      <Project>{1a494025-0442-4f60-9f06-c89e8fb784e8}</Project>
+      <Private>True</Private>
+      <PackageToBundle>True</PackageToBundle>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VSAC\Microsoft.SystemCenter.OperationsManager.targets" />

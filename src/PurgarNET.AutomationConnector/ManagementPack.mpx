@@ -1,0 +1,11 @@
+﻿<ManagementPackFragment SchemaVersion="SM2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <Categories>
+    <Category ID="PurgarNET.AutomationConnector.Category" Value="Console!Microsoft.EnterpriseManagement.ServiceManager.ManagementPack">
+      <ManagementPackName>PurgarNET.AutomationConnector</ManagementPackName>
+      <ManagementPackVersion>1.0.0.0</ManagementPackVersion>
+      <ManagementPackPublicKeyToken>7f35fe34b7472a92</ManagementPackPublicKeyToken>
+    </Category>
+  </Categories>
+
+</ManagementPackFragment>
