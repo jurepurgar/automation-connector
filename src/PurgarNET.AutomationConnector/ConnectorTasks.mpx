@@ -41,8 +41,6 @@
     
   </Presentation>
   
-  <!--PurgarNET.AutomationConnector.ManageConnector.Create-->
-
   <LanguagePacks>
     <LanguagePack ID="ENU" IsDefault="true">
       <DisplayStrings>
