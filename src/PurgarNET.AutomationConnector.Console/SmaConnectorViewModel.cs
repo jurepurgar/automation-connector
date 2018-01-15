@@ -10,6 +10,9 @@ namespace PurgarNET.AutomationConnector.Console
     {
         public SmaConnectorViewModel(bool isNew) : base(isNew)
         {
+            Properties.Add(new Property() { DisplayName = "Url" });
+            Properties.Add(new Property() { DisplayName = "Username" });
+            Properties.Add(new Property() { DisplayName = "Password" });
         }
     }
 }
